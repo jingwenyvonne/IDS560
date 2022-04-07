@@ -471,14 +471,13 @@ for hashtag in hashtag_list:
         print(message)
 
 
-# In[ ]:
-
 
 my_dict_cum.items()
+acc = open("accounts.txt", "a")
 
 
-# In[ ]:
-
+time.sleep(5)
+driver.quit()
 
 
 
