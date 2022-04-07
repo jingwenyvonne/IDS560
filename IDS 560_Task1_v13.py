@@ -473,7 +473,6 @@ for hashtag in hashtag_list:
 
 
 my_dict_cum.items()
-acc = open("accounts.txt", "a")
 
 
 time.sleep(5)
