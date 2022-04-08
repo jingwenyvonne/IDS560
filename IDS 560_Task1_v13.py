@@ -19,7 +19,7 @@ class Bot:
   posts_to_reach_per_hashtag = 50
   
   def __init__(self) -> None:
-        self.browser = webdriver.Chrome(executable_path = "./chromedriver.exe")
+        self.browser = webdriver.Chrome(executable_path = "/usr/local/bin/chromedriver")
         self.action = webdriver.ActionChains(self.browser) 
         self.username = un
         self.password = pw
