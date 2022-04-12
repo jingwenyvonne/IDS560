@@ -12,11 +12,8 @@ import time
 from config import *
 
 
-# In[34]:
-
-
 # Use WebDriver to open a Chrome tab and navigate to Instagram login page
-chromedriver_path = "/usr/local/bin/chromedriver"
+
 webdriver = webdriver.Chrome(executable_path = chromedriver_path)
 webdriver.get("https://www.instagram.com/accounts/login")
 sleep(1)
