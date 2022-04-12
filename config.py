@@ -1,4 +1,7 @@
 # credentials
+chromedriver_path = "/usr/local/bin/chromedriver"
+
+
 un = "jewelrymdjewelry"
 pw = "kaviglobal123_"
 
@@ -17,6 +20,8 @@ comments_list=["Glowing through <3","Simply Iconic, I'm in love!",
               "That is a gorgeous layered look! Many can also be found at @jewelrymdjewelry",
               "A big mood right here <3",
                "Just put in an order but I think I need to order all of these to match @jewelrymdjewelry!"]
+
+
 
 
 
