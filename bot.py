@@ -6,19 +6,54 @@ from random import randint
 import pandas as pd
 from selenium.webdriver.common.by import By
 import time
+from config import un, pw, hashtag_list, comments_list
 import logging
+logging.basicConfig(filename='test.log', level=logging.DEBUG,
+                    format='%(asctime)s:%(levelname)s:%(message)s')
 
+
+limits = {}
+limits['follow_limit_per_hour'] = randint(5,10)
+limits['unfollow_limit_per_hour'] = randint(3,10)
+limits['like_limit_per_hour'] = randint(50,80)
+limits['comment_limit_per_hour'] = randint(10,19)
+            # follow_limit_per_hour = randint(5,10)
+            # unfollow_limit_per_hour= randint(3,10)
+            # like_limit_per_hour = randint(80,120)
+posts_to_reach_per_hashtag = 50
+
+
+# Iterate through the hashtags stored in "hashtag_list"
+
+new_followed = []
+new_unfollowed=[]
+my_dict = {}
+my_dict_cum = {}
+
+my_dict['followed'] = 0
+my_dict['unfollowed']=0
+my_dict['likes'] = 0
+my_dict['comments'] = 0
+my_dict['total_actions'] = 0
+my_dict_time = {}
+my_dict_time ['like_timer'] =time.time()
+my_dict_time ['follow_timer'] =time.time()
+my_dict_time ['unfollow_timer']=time.time()
+my_dict_time ['comment_timer'] =time.time()
+my_dict_cum['followed'] = 0
+my_dict_cum['unfollowed']=0
+my_dict_cum['likes'] = 0
+my_dict_cum['comments'] = 0
+my_dict_cum['total_actions'] = 0
 
 class InstaBot():
-    
                     
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
+    def __init__(self):
+        self.login(un,pw)
+
+        
+    def login(self,username,password):
         self.driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver")
-        
-        
-    def login(self):
         driver = self.driver
         driver.get('https://www.instagram.com/accounts/login')
         time.sleep(2)
@@ -65,7 +100,7 @@ class InstaBot():
     #Number of followers function
     def num_followers(self,username):
         driver= self.driver
-        url = "https://www.instagram.com/jewelrymdjewelry/"
+        url = "https://www.instagram.com/"+username+'/'
         sleep(2)
         driver.execute_script("window.open('');")
         driver.switch_to.window(driver.window_handles[1])
@@ -88,40 +123,6 @@ class InstaBot():
 
     def unfollow(self,username):
         driver = self.driver
-        
-        limits = {}
-        limits['follow_limit_per_hour'] = randint(5,10)
-        limits['unfollow_limit_per_hour'] = randint(3,10)
-        limits['like_limit_per_hour'] = randint(50,80)
-        limits['comment_limit_per_hour'] = randint(10,19)
-                    # follow_limit_per_hour = randint(5,10)
-                    # unfollow_limit_per_hour= randint(3,10)
-                    # like_limit_per_hour = randint(80,120)
-        posts_to_reach_per_hashtag = 50
-
-
-        # Iterate through the hashtags stored in "hashtag_list"
-
-        new_followed = []
-        new_unfollowed=[]
-        my_dict = {}
-        my_dict_cum = {}
-
-        my_dict['followed'] = 0
-        my_dict['unfollowed']=0
-        my_dict['likes'] = 0
-        my_dict['comments'] = 0
-        my_dict['total_actions'] = 0
-        my_dict_time = {}
-        my_dict_time ['like_timer'] =time.time()
-        my_dict_time ['follow_timer'] =time.time()
-        my_dict_time ['unfollow_timer']=time.time()
-        my_dict_time ['comment_timer'] =time.time()
-        my_dict_cum['followed'] = 0
-        my_dict_cum['unfollowed']=0
-        my_dict_cum['likes'] = 0
-        my_dict_cum['comments'] = 0
-        my_dict_cum['total_actions'] = 0
         if (time.time()-my_dict_time ['unfollow_timer']) < 3600 and my_dict['unfollowed']<limits['unfollow_limit_per_hour']:
             driver.execute_script("window.open('');")
             driver.switch_to.window(driver.window_handles[1])
@@ -199,39 +200,6 @@ class InstaBot():
     def follow(self,username):
 
         driver = self.driver
-        limits = {}
-        limits['follow_limit_per_hour'] = randint(5,10)
-        limits['unfollow_limit_per_hour'] = randint(3,10)
-        limits['like_limit_per_hour'] = randint(50,80)
-        limits['comment_limit_per_hour'] = randint(10,19)
-                    # follow_limit_per_hour = randint(5,10)
-                    # unfollow_limit_per_hour= randint(3,10)
-                    # like_limit_per_hour = randint(80,120)
-        posts_to_reach_per_hashtag = 50
-
-
-        # Iterate through the hashtags stored in "hashtag_list"
-
-        new_followed = []
-        new_unfollowed=[]
-        my_dict = {}
-        my_dict_cum = {}
-
-        my_dict['followed'] = 0
-        my_dict['unfollowed']=0
-        my_dict['likes'] = 0
-        my_dict['comments'] = 0
-        my_dict['total_actions'] = 0
-        my_dict_time = {}
-        my_dict_time ['like_timer'] =time.time()
-        my_dict_time ['follow_timer'] =time.time()
-        my_dict_time ['unfollow_timer']=time.time()
-        my_dict_time ['comment_timer'] =time.time()
-        my_dict_cum['followed'] = 0
-        my_dict_cum['unfollowed']=0
-        my_dict_cum['likes'] = 0
-        my_dict_cum['comments'] = 0
-        my_dict_cum['total_actions'] = 0
         follow_ = driver.find_element_by_css_selector("body > div.RnEpo._Yhr4 > div.pbNvD.QZZGH.bW6vo > div > article > div > div.HP0qD > div > div > div.UE9AK > div > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.bY2yH > button > div")
         username = driver.find_element_by_css_selector("body > div.RnEpo._Yhr4 > div.pbNvD.QZZGH.bW6vo > div > article > div > div.HP0qD > div > div > div.UE9AK > div > header > div.o-MQd.z8cbW > div.PQo_0.RqtMr > div.e1e1d > div > span > a").text
 
@@ -282,39 +250,6 @@ class InstaBot():
     def like (self):
 
         driver= self.driver
-        limits = {}
-        limits['follow_limit_per_hour'] = randint(5,10)
-        limits['unfollow_limit_per_hour'] = randint(3,10)
-        limits['like_limit_per_hour'] = randint(50,80)
-        limits['comment_limit_per_hour'] = randint(10,19)
-                    # follow_limit_per_hour = randint(5,10)
-                    # unfollow_limit_per_hour= randint(3,10)
-                    # like_limit_per_hour = randint(80,120)
-        posts_to_reach_per_hashtag = 50
-
-
-        # Iterate through the hashtags stored in "hashtag_list"
-
-        new_followed = []
-        new_unfollowed=[]
-        my_dict = {}
-        my_dict_cum = {}
-
-        my_dict['followed'] = 0
-        my_dict['unfollowed']=0
-        my_dict['likes'] = 0
-        my_dict['comments'] = 0
-        my_dict['total_actions'] = 0
-        my_dict_time = {}
-        my_dict_time ['like_timer'] =time.time()
-        my_dict_time ['follow_timer'] =time.time()
-        my_dict_time ['unfollow_timer']=time.time()
-        my_dict_time ['comment_timer'] =time.time()
-        my_dict_cum['followed'] = 0
-        my_dict_cum['unfollowed']=0
-        my_dict_cum['likes'] = 0
-        my_dict_cum['comments'] = 0
-        my_dict_cum['total_actions'] = 0
         if (time.time()-my_dict_time ['like_timer']) < 3600 and my_dict['likes'] <limits['like_limit_per_hour']:
             like = driver.find_element_by_css_selector("body > div.RnEpo._Yhr4 > div.pbNvD.QZZGH.bW6vo > div > article > div > div.HP0qD > div > div > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button")
             like.click()
@@ -358,40 +293,6 @@ class InstaBot():
     #Comment function
     def comment(self, num_of_followers):
 
-        driver= self.driver
-        limits = {}
-        limits['follow_limit_per_hour'] = randint(5,10)
-        limits['unfollow_limit_per_hour'] = randint(3,10)
-        limits['like_limit_per_hour'] = randint(50,80)
-        limits['comment_limit_per_hour'] = randint(10,19)
-                    # follow_limit_per_hour = randint(5,10)
-                    # unfollow_limit_per_hour= randint(3,10)
-                    # like_limit_per_hour = randint(80,120)
-        posts_to_reach_per_hashtag = 50
-
-
-        # Iterate through the hashtags stored in "hashtag_list"
-
-        new_followed = []
-        new_unfollowed=[]
-        my_dict = {}
-        my_dict_cum = {}
-
-        my_dict['followed'] = 0
-        my_dict['unfollowed']=0
-        my_dict['likes'] = 0
-        my_dict['comments'] = 0
-        my_dict['total_actions'] = 0
-        my_dict_time = {}
-        my_dict_time ['like_timer'] =time.time()
-        my_dict_time ['follow_timer'] =time.time()
-        my_dict_time ['unfollow_timer']=time.time()
-        my_dict_time ['comment_timer'] =time.time()
-        my_dict_cum['followed'] = 0
-        my_dict_cum['unfollowed']=0
-        my_dict_cum['likes'] = 0
-        my_dict_cum['comments'] = 0
-        my_dict_cum['total_actions'] = 0
         if (time.time()-my_dict_time ['comment_timer']) < 3600 and my_dict['comments'] <limits ['comment_limit_per_hour']:
             comment = driver.find_element_by_css_selector("body > div.RnEpo._Yhr4 > div.pbNvD.QZZGH.bW6vo > div > article > div > div.HP0qD > div > div > div.eo2As > section.sH9wk._JgwE > div > form > textarea")
             comment.click()
@@ -589,6 +490,12 @@ class InstaBot():
 
         my_dict_cum.items()
 
+def main():
+    instabot =InstaBot()
 
+
+
+if __name__ == '__main__':
+    main()
 
         
