@@ -10,7 +10,9 @@ import pandas as pd
 from selenium.webdriver.common.by import By
 import time
 from config import *
-
+import logging
+logging.basicConfig(filename='test.log', level=logging.DEBUG,
+                    format='%(asctime)s:%(levelname)s:%(message)s')
 
 # Use WebDriver to open a Chrome tab and navigate to Instagram login page
 
@@ -103,9 +105,7 @@ def num_followers(username):
 
 
 #Follow method and moving to next image
-import logging
-logging.basicConfig(filename='test.log', level=logging.DEBUG,
-                    format='%(asctime)s:%(levelname)s:%(message)s')
+
 def unfollow():
     if (time.time()-my_dict_time ['unfollow_timer']) < 3600 and my_dict['unfollowed']<limits['unfollow_limit_per_hour']:
         webdriver.execute_script("window.open('');")
