@@ -13,6 +13,42 @@ from config import *
 import logging
 logging.basicConfig(filename='test.log', level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(message)s')
+limits = {}
+limits['follow_limit_per_hour'] = randint(5,10)
+limits['unfollow_limit_per_hour'] = randint(3,10)
+limits['like_limit_per_hour'] = randint(50,80)
+limits['comment_limit_per_hour'] = randint(10,19)
+# follow_limit_per_hour = randint(5,10)
+# unfollow_limit_per_hour= randint(3,10)
+# like_limit_per_hour = randint(80,120)
+# comment_limit_per_hour = randint(30,50)
+posts_to_reach_per_hashtag = 50
+
+
+# Iterate through the hashtags stored in "hashtag_list"
+
+new_followed = []
+new_unfollowed=[]
+my_dict = {}
+my_dict_cum = {}
+
+my_dict['followed'] = 0
+my_dict['unfollowed']=0
+my_dict['likes'] = 0
+my_dict['comments'] = 0
+my_dict['total_actions'] = 0
+my_dict_time = {}
+my_dict_time ['like_timer'] =time.time()
+my_dict_time ['follow_timer'] =time.time()
+my_dict_time ['unfollow_timer']=time.time()
+my_dict_time ['comment_timer'] =time.time()
+my_dict_cum['followed'] = 0
+my_dict_cum['unfollowed']=0
+my_dict_cum['likes'] = 0
+my_dict_cum['comments'] = 0
+my_dict_cum['total_actions'] = 0
+
+
 
 # Use WebDriver to open a Chrome tab and navigate to Instagram login page
 
@@ -53,47 +89,19 @@ not_now.click()
 sleep(randint(2,5))
 
 
-
-limits = {}
-limits['follow_limit_per_hour'] = randint(5,10)
-limits['unfollow_limit_per_hour'] = randint(3,10)
-limits['like_limit_per_hour'] = randint(50,80)
-limits['comment_limit_per_hour'] = randint(10,19)
-# follow_limit_per_hour = randint(5,10)
-# unfollow_limit_per_hour= randint(3,10)
-# like_limit_per_hour = randint(80,120)
-# comment_limit_per_hour = randint(30,50)
-posts_to_reach_per_hashtag = 50
+# In[38]:
 
 
-# Iterate through the hashtags stored in "hashtag_list"
+# a ='45412'
+# float(a.replace(',',''))
 
-new_followed = []
-new_unfollowed=[]
-my_dict = {}
-my_dict_cum = {}
 
-my_dict['followed'] = 0
-my_dict['unfollowed']=0
-my_dict['likes'] = 0
-my_dict['comments'] = 0
-my_dict['total_actions'] = 0
-my_dict_time = {}
-my_dict_time ['like_timer'] =time.time()
-my_dict_time ['follow_timer'] =time.time()
-my_dict_time ['unfollow_timer']=time.time()
-my_dict_time ['comment_timer'] =time.time()
-my_dict_cum['followed'] = 0
-my_dict_cum['unfollowed']=0
-my_dict_cum['likes'] = 0
-my_dict_cum['comments'] = 0
-my_dict_cum['total_actions'] = 0
-
+# In[39]:
 
 
 #refresh 
-def refresh():
-    webdriver.get("https://www.instagram.com/jewelrymdjewelry/")
+def refresh(un):
+    webdriver.get("https://www.instagram.com/"+un+'/')
     sleep(randint(2,5))
     picture=webdriver.find_element_by_css_selector("#react-root > section > main > div > div._2z6nI > article > div > div > div > div.v1Nh3.kIKUG._bz0w > a > div > div._9AhH0")
     picture.click()
@@ -136,10 +144,8 @@ def num_followers(username):
 
 def unfollow():
     if (time.time()-my_dict_time ['unfollow_timer']) < 3600 and my_dict['unfollowed']<limits['unfollow_limit_per_hour']:
-        webdriver.execute_script("window.open('');")
-        webdriver.switch_to.window(webdriver.window_handles[1])
-        for i in range(5):
-            webdriver.get("https://www.instagram.com/jewelrymdjewelry/")
+        for i in range(2):
+            webdriver.get("https://www.instagram.com/"+un+'/')
             following_=webdriver.find_element_by_partial_link_text("following")
             following_.click()
             sleep(randint(1,3))
@@ -162,7 +168,7 @@ def unfollow():
             my_dict_time ['unfollow_timer'] =time.time()
             my_dict['unfollowed'] = 0
             limits['unfollow_limit_per_hour']= randint(3,10)
-            webdriver.get("https://www.instagram.com/jewelrymdjewelry/")
+            webdriver.get("https://www.instagram.com/"+un+'/')
             following_=webdriver.find_element_by_partial_link_text("following")
             following_.click()
             sleep(randint(1,5))
@@ -187,7 +193,7 @@ def unfollow():
             my_dict_time ['unfollow_timer'] =time.time()
             my_dict['unfollowed'] = 0
             limits['unfollow_limit_per_hour']= randint(3,10)
-            webdriver.get("https://www.instagram.com/jewelrymdjewelry/")
+            webdriver.get("https://www.instagram.com/"+un+'/')
             following_=webdriver.find_element_by_partial_link_text("following")
             following_.click()
             sleep(randint(1,5))
@@ -404,7 +410,7 @@ for hashtag in hashtag_list:
                 number_of_followers  = num_followers(username)
                 sleep(randint(1,3))  
                 
-                if my_dict['total_actions']>=349 and my_dict['total_actions']<350:
+                if my_dict['total_actions']>=340 and my_dict['total_actions']<350:
                     unfollow()
                 elif my_dict['total_actions']>=350:
                     print('Actions during this session')
