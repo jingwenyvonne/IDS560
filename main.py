@@ -53,14 +53,42 @@ not_now.click()
 sleep(randint(2,5))
 
 
-# In[38]:
+
+limits = {}
+limits['follow_limit_per_hour'] = randint(5,10)
+limits['unfollow_limit_per_hour'] = randint(3,10)
+limits['like_limit_per_hour'] = randint(50,80)
+limits['comment_limit_per_hour'] = randint(10,19)
+# follow_limit_per_hour = randint(5,10)
+# unfollow_limit_per_hour= randint(3,10)
+# like_limit_per_hour = randint(80,120)
+# comment_limit_per_hour = randint(30,50)
+posts_to_reach_per_hashtag = 50
 
 
-# a ='45412'
-# float(a.replace(',',''))
+# Iterate through the hashtags stored in "hashtag_list"
 
+new_followed = []
+new_unfollowed=[]
+my_dict = {}
+my_dict_cum = {}
 
-# In[39]:
+my_dict['followed'] = 0
+my_dict['unfollowed']=0
+my_dict['likes'] = 0
+my_dict['comments'] = 0
+my_dict['total_actions'] = 0
+my_dict_time = {}
+my_dict_time ['like_timer'] =time.time()
+my_dict_time ['follow_timer'] =time.time()
+my_dict_time ['unfollow_timer']=time.time()
+my_dict_time ['comment_timer'] =time.time()
+my_dict_cum['followed'] = 0
+my_dict_cum['unfollowed']=0
+my_dict_cum['likes'] = 0
+my_dict_cum['comments'] = 0
+my_dict_cum['total_actions'] = 0
+
 
 
 #refresh 
